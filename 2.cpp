@@ -2,36 +2,38 @@
 #include <fstream>
 #include <string>
 #include <vector>
+
 using namespace std;
 using std::vector;
 
 
-vector<string> string_split (const string &input, const char &separator) {
+vector<string> string_split (const string &input, const char separator) {
     vector<string> result;
     if (input.empty()) return result;
-    string temp("");
+    string temp;
 
-    for (const auto &c : input) {
+    for (const auto c : input) {
         if (c != separator) {
             temp += c;
             continue;
         }
         if (!temp.empty()) result.push_back(temp);
-        temp = "";
+        temp.clear();
     }
     if (!temp.empty()) result.push_back(temp);
     
-    return result;
+    result.shrink_to_fit();
+    return std::move(result);
 }
 
 
 // return max - min;
-int part1_calc_checksum (const string &line, const char &separator) {
-    int max = 0;
-    int min = 1000;
+int part1_calc_checksum (const string &line, const char separator) {
+    int max {0};
+    int min {1000};
     auto data = string_split(line, separator);
 
-    for (const auto value : data) {
+    for (const auto &value : data) {
         if (stoi(value) > max) { max = stoi(value); }
         if (stoi(value) < min) { min = stoi(value); }
     }
@@ -39,7 +41,7 @@ int part1_calc_checksum (const string &line, const char &separator) {
 }
 
 // returns division if mod == 0
-int part2_calc_division (const string &line, const char &separator) {
+int part2_calc_division (const string &line, const char separator) {
     auto data = string_split(line, separator);
     for (const auto a : data) {
         for (const auto b : data) {
@@ -69,4 +71,4 @@ int main() {
     cout << "Part 2: " << sum << endl;
 
     return 0;
-} 
+}

@@ -1,15 +1,15 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+
 using namespace std;
 
 // sums two digits if the digit at n == n+offset
 int sum_if_match (const string &line, const int offset) {
-    int sum = 0;
-    int next = 0;
+    int sum {0};
 
-    for (auto i = 0; i < line.size(); i++) {
-        next = i+offset;
+    for (auto i = 0; i < line.size(); ++i) {
+        int next = i + offset;
         if (next>=line.size())     { next -= line.size();  } // wrap around
         if (line[i] == line[next]) { sum += line[i] - '0'; }
     }
@@ -18,7 +18,6 @@ int sum_if_match (const string &line, const int offset) {
 }
 
 int main() {
-
     string line;
     ifstream input ("1.txt");
 
