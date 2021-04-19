@@ -7,8 +7,7 @@
 using namespace std;
 
 
-// same as Day 02
-vector<string> string_split (const string &input, const char separator) {
+vector<string> string_split (const string &input, const char separator, const bool sort = false) {
     vector<string> result;
     if (input.empty()) return result;
     string temp;
@@ -18,19 +17,24 @@ vector<string> string_split (const string &input, const char separator) {
             temp += c;
             continue;
         }
-        if (!temp.empty()) result.push_back(temp);
+        if (!temp.empty()) {
+            if (sort) { std::sort(temp.begin(), temp.end()); }
+            result.push_back(temp);
+        }
         temp.clear();
     }
-    if (!temp.empty()) result.push_back(temp);
-    
+    if (!temp.empty()) {
+        if (sort) { std::sort(temp.begin(), temp.end()); }
+        result.push_back(temp);
+    }
     result.shrink_to_fit();
     return std::move(result);
 }
 
 
 // check if there are duplicate words in the phrase
-bool contains_duplicates(const string &input, const char separator) {
-    auto items = string_split(input, separator);
+bool contains_duplicates(const string &input, const char separator, const bool sort) {
+    auto items = string_split(input, separator, sort);
     for (auto i = items.begin(); i != items.end(); ++i) {
        if (std::count(items.begin(), items.end(), *i) > 1) { return true; }
     }
@@ -39,15 +43,16 @@ bool contains_duplicates(const string &input, const char separator) {
 
 
 int main() {
-
-    int valid {0};
+    int p1_valid {0}, p2_valid {0};
     ifstream input ("4.txt");
     string line;
     while (getline(input, line)) {
-        if (!contains_duplicates(line,' ')) ++valid;
+        if (!contains_duplicates(line,' ',false)) ++p1_valid;
+        // if we sort the component we don't need to check for anagrams
+        if (!contains_duplicates(line,' ',true))  ++p2_valid;
     }
-
-    cout << "Part 1: " << valid << endl;
+    cout << "Part 1: " << p1_valid << endl;
+    cout << "Part 2: " << p2_valid << endl;
 
     return 0;
 }
