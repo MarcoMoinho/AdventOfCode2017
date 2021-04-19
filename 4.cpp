@@ -34,7 +34,7 @@ vector<string> string_split (const string &input, const char separator, const bo
 
 // check if there are duplicate words in the phrase
 bool contains_duplicates(const string &input, const char separator, const bool sort) {
-    auto items = string_split(input, separator, sort);
+    const auto items = string_split(input, separator, sort);
     for (auto i = items.begin(); i != items.end(); ++i) {
        if (std::count(items.begin(), items.end(), *i) > 1) { return true; }
     }
