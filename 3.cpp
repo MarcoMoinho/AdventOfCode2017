@@ -1,25 +1,20 @@
 #include <iostream>
-#include <fstream>
 #include <string>
-#include <vector>
 #include <cmath>
 
 using namespace std;
-using std::vector;
 
 
 int calc_manhantan_dist (const int target) {
     if (target == 1) return 0;
 
     // calculate the bottom right corner to find the correct "ring"
-    int ring {1};
-    int ring_max {0};
+    int ring {1}, ring_max;
     do {
         ring_max = ring * 2 + 1;         // calc the ring width
         ring_max = ring_max * ring_max;  // calc the max of the ring
         ++ring;
-    }
-    while (target > ring_max);
+    } while (target > ring_max);
     ring -= 1;
 
     if (target == ring_max) { return ring*2; }
@@ -35,7 +30,6 @@ int calc_manhantan_dist (const int target) {
 }
 
 int main() {
-    
     cout << calc_manhantan_dist(1) << endl;
     cout << calc_manhantan_dist(12) << endl;
     cout << calc_manhantan_dist(23) << endl;
